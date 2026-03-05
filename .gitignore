@@ -1,0 +1,34 @@
+# WordPress Core
+wp-config.php
+# (Keep a sample config if you're not tracking it)
+# wp-config-sample.php (already exists)
+
+# WordPress Content
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/backups/
+wp-content/ai1wm-backups/
+wp-content/blogs.dir/
+wp-content/upgrade-temp-backup/
+wp-content/advanced-cache.php
+wp-content/wp-cache-config.php
+
+# PHP logs and other server-related
+*.log
+error_log
+.htaccess
+db.opt
+
+# Sensitive Information - CAUTION: Contains real API key!
+scripts/set_api_key.php
+
+# Project specific
+node_modules/
+.idea/
+.vscode/
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini

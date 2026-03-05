@@ -1,0 +1,20 @@
+kind: wasmer.io/App.v0
+name: rocky-wordpress
+package: .
+volumes:
+  - name: wp-uploads
+    mount: /app/wp-content/uploads
+scaling:
+  mode: single_concurrency
+capabilities:
+  database:
+    engine: mysql
+  instaboot:
+    max_age: 59m
+    requests:
+    - path: /
+      headers:
+      - name: Accept
+        value: text/html
+      - name: Accept-Language
+        value: en-US
