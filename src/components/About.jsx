@@ -6,7 +6,7 @@ const About = () => {
     <section id="about" className="about-section">
       <div className="container">
         <div className="about-content">
-          <h2 className="section-title">About Rocky Plumbers</h2>
+          <h2 className="section-title">About Kleyn Plumbers</h2>
           <div className="about-text">
             <p>We cater to our unique customer and client demands by providing services and products that set high standards for quality, reliability, durability and value for money. We strive to be the best in every aspect of our business, by fostering a culture of trust, responsibility, high expectations and open communication with our customers, clients and suppliers.</p>
             <p>We understand the value and importance of the process of continual improvement. By frequently setting and reviewing goals and objectives throughout our business operations, we achieve building and construction outcomes that regularly exceed our customer's requirements and expectations.</p>

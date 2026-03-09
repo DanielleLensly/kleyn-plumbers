@@ -4,7 +4,7 @@ import { FaWhatsapp, FaCalendarAlt, FaExpandAlt, FaCompressAlt, FaTimes, FaComme
 const WHATSAPP_URL = 'https://wa.me/27631510081';
 import './ChatWidget.css';
 
-const SYSTEM_PROMPT = `You are Rocky, a friendly and knowledgeable assistant for Kleyn Plumbers. 
+const SYSTEM_PROMPT = `You are Kleyn, a friendly and knowledgeable assistant for Kleyn Plumbers. 
 Help customers with plumbing questions, advice, and appointment bookings. 
 Keep responses concise and helpful. If someone wants to book, let them know they can use the "Book Appointment" button.`;
 
@@ -107,7 +107,7 @@ const ChatWidget = ({ onOpenBooking }) => {
               <div className="selection-options">
                 <button className="selection-btn" onClick={() => setView('chat')}>
                   <FaWhatsapp className="icon" />
-                  Ask Rocky a Question
+                  Ask Kleyn a Question
                 </button>
                 <button className="selection-btn" onClick={() => { onOpenBooking(); setIsOpen(false); }}>
                   <FaCalendarAlt className="icon" />
@@ -127,7 +127,7 @@ const ChatWidget = ({ onOpenBooking }) => {
                 ))}
                 {isLoading && (
                   <div className="message bot-message typing-indicator">
-                    Rocky is typing<span>.</span><span>.</span><span>.</span>
+                    Kleyn is typing<span>.</span><span>.</span><span>.</span>
                   </div>
                 )}
                 <div ref={messagesEndRef} />
@@ -137,7 +137,7 @@ const ChatWidget = ({ onOpenBooking }) => {
                   <FaCalendarAlt /> Book Appointment
                 </button>
                 <a className="quick-action-btn whatsapp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-                  <FaWhatsapp /> Contact Rocky
+                  <FaWhatsapp /> Contact Kleyn
                 </a>
               </div>
               <form className="chat-input-area" onSubmit={sendMessage}>

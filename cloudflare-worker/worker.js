@@ -1,4 +1,4 @@
-// Cloudflare Worker — OpenAI Proxy for Rocky Chat
+// Cloudflare Worker — OpenAI Proxy for Kleyn Chat
 // Deploy this at: https://dash.cloudflare.com → Workers & Pages → Create Worker
 // Then add secret: wrangler secret put OPENAI_API_KEY
 
