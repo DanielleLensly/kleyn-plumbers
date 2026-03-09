@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaWhatsapp, FaCalendarAlt, FaExpandAlt, FaCompressAlt, FaTimes, FaCommentDots } from 'react-icons/fa';
 
-const WHATSAPP_URL = 'https://wa.me/27767264010';
+const WHATSAPP_URL = 'https://wa.me/27631510081';
 import './ChatWidget.css';
 
 const SYSTEM_PROMPT = `You are Rocky, a friendly and knowledgeable assistant for Kleyn Plumbers. 
