@@ -53,10 +53,18 @@ const ChatWidget = ({ onOpenBooking }) => {
       });
 
       const data = await response.json();
-      const botReply = data.choices?.[0]?.message?.content || 'Sorry, I could not get a response. Please try again.';
-      setMessages(prev => [...prev, { role: 'bot', text: botReply }]);
+      console.log('Worker response:', data); // debug
+      const botReply = data.choices?.[0]?.message?.content;
+      if (botReply) {
+        setMessages(prev => [...prev, { role: 'bot', text: botReply }]);
+      } else {
+        console.error('Unexpected response:', JSON.stringify(data));
+        setMessages(prev => [...prev, { role: 'bot', text: `Error: ${data.error?.message || 'Unknown error from API'}` }]);
+      }
     } catch (err) {
+      console.error('Fetch error:', err);
       setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, something went wrong. Please try again.' }]);
+
     } finally {
       setIsLoading(false);
     }
