@@ -1,0 +1,24 @@
+.contact-section {
+  background: var(--surface-color);
+  padding: 4rem 0;
+}
+
+.contact-container {
+  background: var(--primary-light);
+  color: white;
+  border-radius: var(--border-radius);
+  padding: 3rem;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+
+.contact-heading {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-detail {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}

@@ -1,34 +1,24 @@
-# WordPress Core
-wp-config.php
-# (Keep a sample config if you're not tracking it)
-# wp-config-sample.php (already exists)
-
-# WordPress Content
-wp-content/uploads/
-wp-content/upgrade/
-wp-content/cache/
-wp-content/backups/
-wp-content/ai1wm-backups/
-wp-content/blogs.dir/
-wp-content/upgrade-temp-backup/
-wp-content/advanced-cache.php
-wp-content/wp-cache-config.php
-
-# PHP logs and other server-related
+# Logs
+logs
 *.log
-error_log
-.htaccess
-db.opt
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Sensitive Information - CAUTION: Contains real API key!
-scripts/set_api_key.php
+node_modules
+dist
+dist-ssr
+*.local
 
-# Project specific
-node_modules/
-.idea/
-.vscode/
-
-# OS specific
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-desktop.ini
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

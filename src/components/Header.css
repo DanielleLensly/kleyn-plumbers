@@ -1,0 +1,36 @@
+.site-header {
+  background: white;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-area h1 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--primary);
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.main-nav {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.main-nav a {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.main-nav a:hover {
+  color: var(--primary);
+}

@@ -1,0 +1,12 @@
+.site-footer {
+  margin-top: auto;
+  background: var(--text-primary);
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.site-footer p {
+  opacity: 0.8;
+  margin: 0;
+}
