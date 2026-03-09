@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaWhatsapp, FaCalendarAlt, FaExpandAlt, FaTimes, FaCommentDots } from 'react-icons/fa';
 import './ChatWidget.css';
+
+const SYSTEM_PROMPT = `You are Rocky, a friendly and knowledgeable assistant for Kleyn Plumbers. 
+Help customers with plumbing questions, advice, and appointment bookings. 
+Keep responses concise and helpful. If someone wants to book, let them know they can use the "Book Appointment" button.`;
 
 const ChatWidget = ({ onOpenBooking }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,22 +13,57 @@ const ChatWidget = ({ onOpenBooking }) => {
     { role: 'bot', text: 'Hello! I can assist you with booking a plumbing appointment. How can I help you today?' }
   ]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
 
   const toggleChat = () => setIsOpen(!isOpen);
   const closeChat = () => setIsOpen(false);
   const goBack = () => setView('selection');
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isLoading) return;
 
-    setMessages([...messages, { role: 'user', text: inputValue }]);
+    const userText = inputValue.trim();
+    const updatedMessages = [...messages, { role: 'user', text: userText }];
+    setMessages(updatedMessages);
     setInputValue('');
-    
-    // Simulate AI response for now
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'bot', text: 'I am a demo AI. In a real environment, I would connect to the backend API now.' }]);
-    }, 1000);
+    setIsLoading(true);
+
+    try {
+      const apiMessages = [
+        { role: 'system', content: SYSTEM_PROMPT },
+        ...updatedMessages.map(m => ({
+          role: m.role === 'bot' ? 'assistant' : 'user',
+          content: m.text,
+        })),
+      ];
+
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages: apiMessages,
+          max_tokens: 300,
+        }),
+      });
+
+      const data = await response.json();
+      const botReply = data.choices?.[0]?.message?.content || 'Sorry, I could not get a response. Please try again.';
+      setMessages(prev => [...prev, { role: 'bot', text: botReply }]);
+    } catch (err) {
+      setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, something went wrong. Please try again.' }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -76,15 +115,22 @@ const ChatWidget = ({ onOpenBooking }) => {
                     {msg.text}
                   </div>
                 ))}
+                {isLoading && (
+                  <div className="message bot-message typing-indicator">
+                    Rocky is typing<span>.</span><span>.</span><span>.</span>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
               <form className="chat-input-area" onSubmit={sendMessage}>
                 <input 
                   type="text" 
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Type your message..." 
+                  placeholder="Type your message..."
+                  disabled={isLoading}
                 />
-                <button type="submit" className="send-btn">Send</button>
+                <button type="submit" className="send-btn" disabled={isLoading}>Send</button>
               </form>
             </div>
           )}
