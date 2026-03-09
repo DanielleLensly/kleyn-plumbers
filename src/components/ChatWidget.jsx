@@ -6,6 +6,9 @@ const SYSTEM_PROMPT = `You are Rocky, a friendly and knowledgeable assistant for
 Help customers with plumbing questions, advice, and appointment bookings. 
 Keep responses concise and helpful. If someone wants to book, let them know they can use the "Book Appointment" button.`;
 
+// Cloudflare Worker proxy URL — keeps the OpenAI API key server-side
+const WORKER_URL = 'https://rocky-chat.kleynplumbers.workers.dev';
+
 const ChatWidget = ({ onOpenBooking }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState('selection'); // 'selection' | 'chat'
@@ -43,17 +46,10 @@ const ChatWidget = ({ onOpenBooking }) => {
         })),
       ];
 
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch(WORKER_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: apiMessages,
-          max_tokens: 300,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: apiMessages }),
       });
 
       const data = await response.json();
