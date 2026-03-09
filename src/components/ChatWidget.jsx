@@ -7,7 +7,7 @@ Help customers with plumbing questions, advice, and appointment bookings.
 Keep responses concise and helpful. If someone wants to book, let them know they can use the "Book Appointment" button.`;
 
 // Cloudflare Worker proxy URL — keeps the OpenAI API key server-side
-const WORKER_URL = 'https://rocky-chat.kleynplumbers.workers.dev';
+const WORKER_URL = 'https://rocky-chat.danielle-lensly93.workers.dev';
 
 const ChatWidget = ({ onOpenBooking }) => {
   const [isOpen, setIsOpen] = useState(false);
