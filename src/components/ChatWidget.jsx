@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { FaWhatsapp, FaCalendarAlt, FaExpandAlt, FaTimes, FaCommentDots } from 'react-icons/fa';
+import { FaWhatsapp, FaCalendarAlt, FaExpandAlt, FaCompressAlt, FaTimes, FaCommentDots } from 'react-icons/fa';
+
+const WHATSAPP_URL = 'https://wa.me/27767264010';
 import './ChatWidget.css';
 
 const SYSTEM_PROMPT = `You are Rocky, a friendly and knowledgeable assistant for Kleyn Plumbers. 
@@ -11,6 +13,7 @@ const WORKER_URL = 'https://rocky-chat.danielle-lensly93.workers.dev';
 
 const ChatWidget = ({ onOpenBooking }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [view, setView] = useState('selection'); // 'selection' | 'chat'
   const [messages, setMessages] = useState([
     { role: 'bot', text: 'Hello! I can assist you with booking a plumbing appointment. How can I help you today?' }
@@ -24,8 +27,9 @@ const ChatWidget = ({ onOpenBooking }) => {
   }, [messages, isLoading]);
 
   const toggleChat = () => setIsOpen(!isOpen);
-  const closeChat = () => setIsOpen(false);
+  const closeChat = () => { setIsOpen(false); setIsExpanded(false); };
   const goBack = () => setView('selection');
+  const toggleExpand = () => setIsExpanded(prev => !prev);
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -84,14 +88,16 @@ const ChatWidget = ({ onOpenBooking }) => {
       )}
 
       {isOpen && (
-        <div className="ai-chat-widget">
+        <div className={`ai-chat-widget${isExpanded ? ' expanded' : ''}`}>
           <div className="chat-header">
             {view === 'chat' && (
               <button className="back-btn" onClick={goBack}>&larr;</button>
             )}
             <h3 className="chat-title">How can we help?</h3>
             <div className="header-actions">
-              <button className="header-btn" title="Expand Chat"><FaExpandAlt /></button>
+              <button className="header-btn" onClick={toggleExpand} title={isExpanded ? 'Shrink Chat' : 'Expand Chat'}>
+                {isExpanded ? <FaCompressAlt /> : <FaExpandAlt />}
+              </button>
               <button className="header-btn" onClick={closeChat} title="Close"><FaTimes /></button>
             </div>
           </div>
@@ -125,6 +131,14 @@ const ChatWidget = ({ onOpenBooking }) => {
                   </div>
                 )}
                 <div ref={messagesEndRef} />
+              </div>
+              <div className="chat-quick-actions">
+                <button className="quick-action-btn" onClick={() => { onOpenBooking(); setIsOpen(false); }}>
+                  <FaCalendarAlt /> Book Appointment
+                </button>
+                <a className="quick-action-btn whatsapp" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+                  <FaWhatsapp /> Contact Rocky
+                </a>
               </div>
               <form className="chat-input-area" onSubmit={sendMessage}>
                 <input 
